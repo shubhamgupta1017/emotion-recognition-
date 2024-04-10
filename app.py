@@ -45,6 +45,7 @@ def video_frame_callback(frame: av.VideoFrame) -> av.VideoFrame:
             roi = img_to_array(roi)
             roi = np.expand_dims(roi, axis=0)
             prediction = classifier.predict(roi)[0]
+            
             maxindex = int(np.argmax(prediction))
             finalout = emotion_name[maxindex]
             output = str(finalout)
@@ -56,46 +57,23 @@ def video_frame_callback(frame: av.VideoFrame) -> av.VideoFrame:
 
 def main():
     # Face Analysis Application #
-    st.title("Real Time Face Emotion Detection Application")
-    activities = ["Home", "Webcam Emotion Detection", "Image Emotion Detection"]
-    choice = st.sidebar.selectbox("Select Activity", activities)
+    st.title("Emotion Detection Application")
     st.sidebar.markdown(
         """ Developed by Aravind S
             2nd Year B.E Computer Science and Engineering (Data Science)
             Annamalai University""")
-    if choice == "Home":
-        html_temp_home1 = """<div style="background-color:#6D7B8D;padding:10px">
-                                            <h4 style="color:white;text-align:center;">
-                                            Face Emotion detection application using OpenCV, Custom CNN model and Streamlit.</h4>
-                                            </div>
-                                            </br>"""
-        st.markdown(html_temp_home1, unsafe_allow_html=True)
-        st.write("""
-                 The application has two functionalities.
 
-                 1. Real time face detection using web cam feed.
-
-                 2. Real time face emotion recognization.
-
-                 """)
-    elif choice == "Webcam Emotion Detection":
-        st.header("Webcam Live Feed")
-        st.write("Click on start to use webcam and detect your face emotion")
-        webrtc_streamer(
-            key="object-detection",
-            mode=WebRtcMode.SENDRECV,
-            rtc_configuration={"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]},
-            video_frame_callback=video_frame_callback,
-            media_stream_constraints={"video": True, "audio": False},
-            async_processing=True,
-            )
-    # elif choice =="Image Emotion Detection":
-    #     st.header("Image Emotion Detection")
-    #     st.write("Upload an image file to predict their emtion.")
-    #     uploaded_image = st.file_uploader('Upload Images', accept_multiple_files=True, type=["png","jpg","jpeg"])
-    #     process_btn = st.button('Process', on_click=image_process)
-    else:
-        pass
+    st.header("Webcam Live Feed")
+    st.write("Click on start to use webcam and detect your face emotion")
+    webrtc_streamer(
+        key="object-detection",
+        mode=WebRtcMode.SENDRECV,
+        rtc_configuration={"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]},
+        video_frame_callback=video_frame_callback,
+        media_stream_constraints={"video": True, "audio": False},
+        async_processing=True,
+        )
+    
 
 
 if __name__ == "__main__":
