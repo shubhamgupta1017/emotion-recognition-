@@ -45,8 +45,10 @@ def video_frame_callback(frame: av.VideoFrame) -> av.VideoFrame:
             roi = img_to_array(roi)
             roi = np.expand_dims(roi, axis=0)
             prediction = classifier.predict(roi)[0]
-            
             maxindex = int(np.argmax(prediction))
+            if maxiindex==2:
+                prediction[max_index] = -np.inf 
+                maxindex = int(np.argmax(prediction))
             finalout = emotion_name[maxindex]
             output = str(finalout)
         label_position = (x, y)
