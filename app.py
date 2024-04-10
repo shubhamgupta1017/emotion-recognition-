@@ -59,9 +59,9 @@ def main():
     # Face Analysis Application #
     st.title("Emotion Detection Application")
     st.sidebar.markdown(
-        """ Developed by Aravind S
-            2nd Year B.E Computer Science and Engineering (Data Science)
-            Annamalai University""")
+        """ Developed by Shubham Gupta
+        for internship
+        """)
 
     st.header("Webcam Live Feed")
     st.write("Click on start to use webcam and detect your face emotion")
